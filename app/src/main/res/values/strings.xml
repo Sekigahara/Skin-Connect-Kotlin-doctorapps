@@ -1,3 +1,24 @@
 <resources>
     <string name="app_name">Doctor Skin Connect</string>
+    <string name="input_error_email">Invalid Email Entered</string>
+    <string name="input_error_password">Invalid Password Entered</string>
+    <string name="title_schedule">Choose Title</string>
+    <string name="send_schedule">Send Schedule</string>
+    <string name="description">Description</string>
+    <string name="time">00:00</string>
+    <string name="set_schedule">Set Schedule For Patient</string>
+    <string name="until">Until</string>
+    <string-array name="title_array">
+        <item>Medicine</item>
+        <item>Rest</item>
+        <item>Consult</item>
+        <item>Treatment</item>
+    </string-array>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="schedule">Schedule</string>
+    <string name="home">Home</string>
+    <string name="profile">Profile</string>
+    <string name="set_time">Set Time :</string>
+    <string name="start">Start :</string>
+    <string name="end">End :</string>
 </resources>
