@@ -1,94 +1,102 @@
 package com.skinconnect.doctorapps.ui.schedule
 
 import android.annotation.SuppressLint
-import android.app.TimePickerDialog
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
-import com.skinconnect.doctorapps.R
+import android.widget.ImageButton
+import android.widget.Toast
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.preferencesDataStore
+import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.skinconnect.doctorapps.data.entity.response.ListScheduleItem
+import com.skinconnect.doctorapps.data.local.UserPreferences
+import com.skinconnect.doctorapps.data.repository.ScheduleRepository
 import com.skinconnect.doctorapps.databinding.FragmentScheduleBinding
 import com.skinconnect.doctorapps.ui.helper.BaseFragment
-import com.skinconnect.doctorapps.ui.helper.NoFilterArrayAdapter
-import java.util.*
+import com.skinconnect.doctorapps.ui.helper.ViewModelFactory
 
+private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
 
 class ScheduleFragment : BaseFragment() {
 
-    private lateinit var titleAutoCompleteTextView : AutoCompleteTextView
-    private lateinit var descriptionText : EditText
-    private lateinit var timeStart : TextView
-    private lateinit var timeEnd : TextView
-    private lateinit var sendButton : Button
+    private lateinit var _username : String
+    private lateinit var _tvDate : String
+    private lateinit var _backButton : ImageButton
+    private lateinit var preference: UserPreferences
 
     override fun onCreateView(
-        inflater : LayoutInflater, container : ViewGroup?,
+        inflater : LayoutInflater,
+        container : ViewGroup?,
         savedInstanceState : Bundle?
     ) : View {
         viewBinding = FragmentScheduleBinding.inflate(inflater, container, false)
         return binding.root
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val binding = binding as FragmentScheduleBinding
+        preference = UserPreferences.getInstance(requireContext().dataStore)
+
+        binding.rvSchedule.apply {
+            layoutManager = LinearLayoutManager(requireContext())
+        }
+
         setupView()
+        setupViewModel()
         setupAction()
     }
 
     override fun setupView() {
         val binding = binding as FragmentScheduleBinding
-        titleAutoCompleteTextView = binding.autoCompleteTextViewSchedule
-        val adapter = NoFilterArrayAdapter(requireContext(),
-        R.layout.list_item_dropdown,
-        arrayOf("Medicine","Rest","Consult","Treatment"))
-        titleAutoCompleteTextView.setAdapter(adapter)
-        descriptionText = binding.cvDescription
-        sendButton = binding.btnSend
-        timeStart = binding.cvTimeStart
-        timeEnd = binding.cvTimeEnd
-
+        _username = binding.tvGreetingUser.toString()
+        _tvDate = binding.tvDate.toString()
+        _backButton = binding.buttonBackSchedule
     }
 
-    @SuppressLint("SetTextI18n")
+    @SuppressLint("FragmentLiveDataObserve")
+    override fun setupViewModel() {
+        val binding = binding as FragmentScheduleBinding
+        val factory = ViewModelFactory.getScheduleInstance(requireContext())
+        val viewModel: ScheduleViewModel by viewModels { factory }
+        this.viewModel = viewModel
+
+        viewModel.getUserToken().observe(this){ token ->
+            if (token.isNotEmpty()){
+                viewModel.getSchedule(token).observe(this){result ->
+                    if (result != null){
+                        when(result) {
+                            is ScheduleRepository.Result.Loading -> {
+                                binding.progressBar.visibility = View.VISIBLE
+                            }
+                            is ScheduleRepository.Result.Success -> {
+                                binding.progressBar.visibility = View.GONE
+                                val schedule = result.data.schedule
+                                val listScheduleAdapter = ScheduleAdapter(schedule as ArrayList<ListScheduleItem>)
+                                binding.rvSchedule.adapter = listScheduleAdapter
+                            }
+                            is ScheduleRepository.Result.Error -> {
+                                binding.progressBar.visibility = View.GONE
+                                Toast.makeText(
+                                    context,
+                                    "Failure : " + result.error,
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     override fun setupAction() {
-        val cal = Calendar.getInstance()
-        val hour = cal.get(Calendar.HOUR_OF_DAY)
-        val min = cal.get(Calendar.MINUTE)
-
-        timeStart.setOnClickListener{
-            val timePickerDialog = TimePickerDialog(context, { _, hourOfDay, minute ->
-                var setTime = ""
-                var h = 0
-                if(hourOfDay>12){
-                    h = hourOfDay-12
-                    setTime = "PM"
-                }else{
-                    h = hourOfDay
-                    setTime = "AM"
-                }
-                timeStart.text = "$h:$minute $setTime"
-            },hour,min,true)
-            timePickerDialog.show()
-        }
-        timeEnd.setOnClickListener{
-            val timePickerDialog = TimePickerDialog(context, TimePickerDialog.OnTimeSetListener{ _, hourOfDay, minute ->
-                var setTime = ""
-                var h = 0
-                if(hourOfDay>12){
-                    h = hourOfDay-12
-                    setTime = "PM"
-                }else{
-                    h = hourOfDay
-                    setTime = "AM"
-                }
-                timeEnd.text = "$h:$minute $setTime"
-            },hour,min,true)
-            timePickerDialog.show()
-        }
-
+       // val binding = binding as FragmentScheduleBinding
     }
-
-    override fun setupViewModel() {    }
-
 }

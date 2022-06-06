@@ -9,10 +9,18 @@ plugins {
     id 'kotlin-kapt'
 }
 
+def keyProperties = new Properties()
+def keyPropertiesFile = rootProject.file('key.properties')
+if (keyPropertiesFile.exists()) {
+    keyProperties.load(new FileInputStream(keyPropertiesFile))
+}
+
+
 android {
     compileSdk 32
 
     defaultConfig {
+        manifestPlaceholders = [BASE_URL: keyProperties['baseUrl'], BASE_URL_ML: keyProperties['baseUrlMl']]
         applicationId "com.skinconnect.doctorapps"
         minSdk 21
         targetSdk 32
@@ -131,6 +139,7 @@ dependencies {
 
     // Foundation (Border, Background, Box, Image, Scroll, shapes, animations, etc.)
     implementation 'androidx.compose.foundation:foundation:1.1.1'
+    implementation 'com.github.siyamed:android-shape-imageview:0.9.3@aar'
 
     // Material Design
     implementation 'androidx.compose.material:material:1.1.1'

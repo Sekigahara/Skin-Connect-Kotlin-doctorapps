@@ -9,6 +9,7 @@ import com.skinconnect.doctorapps.databinding.ActivityMainBinding
 import com.skinconnect.doctorapps.ui.helper.BaseActivity
 import com.skinconnect.doctorapps.ui.main.HomeFragment
 import com.skinconnect.doctorapps.ui.main.ProfileFragment
+import com.skinconnect.doctorapps.ui.schedule.NewScheduleFragment
 import com.skinconnect.doctorapps.ui.schedule.ScheduleFragment
 
 class MainActivity : BaseActivity() {

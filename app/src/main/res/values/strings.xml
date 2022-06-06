@@ -21,4 +21,14 @@
     <string name="set_time">Set Time :</string>
     <string name="start">Start :</string>
     <string name="end">End :</string>
+    <string name="avatar">avatar</string>
+    <string name="username">username</string>
+    <string name="message_validation">Enter your %1$s</string>
+    <string name="content_desc">desc content</string>
+    <string name="greetings">Hello Doctor</string>
+    <string name="date">Sunday</string>
+    <string name="sub_schedule">This is your Patient Schedule</string>
+    <string name="medicine">Medicine</string>
+    <string name="action">Action Schedule</string>
+    <string name="sub_home">This is your Patient List</string>
 </resources>
