@@ -29,7 +29,7 @@ object ApiConfig {
             .build()
 
         val retrofit = Retrofit.Builder()
-            .baseUrl(baseUrl)
+            .baseUrl("https://skinconnect-6e77f4stva-uc.a.run.app/api/v1/")
             .addConverterFactory(GsonConverterFactory.create())
             .client(client).build()
 

@@ -20,12 +20,12 @@ android {
     compileSdk 32
 
     defaultConfig {
-        manifestPlaceholders = [BASE_URL: keyProperties['baseUrl'], BASE_URL_ML: keyProperties['baseUrlMl']]
         applicationId "com.skinconnect.doctorapps"
         minSdk 21
         targetSdk 32
         versionCode 1
         versionName "1.0"
+        manifestPlaceholders = [BASE_URL: keyProperties['baseUrl'], BASE_URL_ML: keyProperties['baseUrlMl']]
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
