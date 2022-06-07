@@ -1,4 +1,4 @@
-package com.skinconnect.doctorapps.data.room
+package com.skinconnect.doctorapps.data.room.dbschedule
 
 import androidx.room.Dao
 import androidx.room.Insert

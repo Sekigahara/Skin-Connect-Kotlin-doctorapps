@@ -8,7 +8,7 @@ import com.skinconnect.doctorapps.data.entity.response.AddScheduleResponse
 import com.skinconnect.doctorapps.data.entity.response.ScheduleResponse
 import com.skinconnect.doctorapps.data.local.UserPreferences
 import com.skinconnect.doctorapps.data.remote.ApiService
-import com.skinconnect.doctorapps.data.room.ScheduleDatabase
+import com.skinconnect.doctorapps.data.room.dbschedule.ScheduleDatabase
 import okhttp3.RequestBody
 
 class ScheduleRepository(

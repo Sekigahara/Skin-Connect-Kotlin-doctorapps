@@ -1,4 +1,4 @@
-package com.skinconnect.doctorapps.ui
+package com.skinconnect.doctorapps.ui.main
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -7,10 +7,9 @@ import com.google.android.material.navigation.NavigationBarView
 import com.skinconnect.doctorapps.R
 import com.skinconnect.doctorapps.databinding.ActivityMainBinding
 import com.skinconnect.doctorapps.ui.helper.BaseActivity
-import com.skinconnect.doctorapps.ui.main.HomeFragment
+import com.skinconnect.doctorapps.ui.main.home.HomeFragment
 import com.skinconnect.doctorapps.ui.main.ProfileFragment
-import com.skinconnect.doctorapps.ui.schedule.NewScheduleFragment
-import com.skinconnect.doctorapps.ui.schedule.ScheduleFragment
+import com.skinconnect.doctorapps.ui.main.schedule.ScheduleFragment
 
 class MainActivity : BaseActivity() {
 

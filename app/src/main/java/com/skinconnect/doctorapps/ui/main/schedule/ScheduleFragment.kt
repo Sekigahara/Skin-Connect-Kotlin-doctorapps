@@ -1,4 +1,4 @@
-package com.skinconnect.doctorapps.ui.schedule
+package com.skinconnect.doctorapps.ui.main.schedule
 
 import android.annotation.SuppressLint
 import android.content.Context
