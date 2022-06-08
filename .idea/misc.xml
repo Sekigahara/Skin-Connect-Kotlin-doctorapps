@@ -4,19 +4,31 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Program Files/Capstone Project/Dokter/app/src/main/res/drawable-v24/button_rounded.xml" value="0.19" />
+        <entry key="..\:/Program Files/Capstone Project/Dokter/app/src/main/res/drawable-v24/ic_age.xml" value="0.188" />
         <entry key="..\:/Program Files/Capstone Project/Dokter/app/src/main/res/drawable-v24/ic_baseline_close_24.xml" value="0.19" />
+        <entry key="..\:/Program Files/Capstone Project/Dokter/app/src/main/res/drawable-v24/ic_baseline_email_24.xml" value="0.188" />
+        <entry key="..\:/Program Files/Capstone Project/Dokter/app/src/main/res/drawable-v24/ic_baseline_gender.xml" value="0.188" />
+        <entry key="..\:/Program Files/Capstone Project/Dokter/app/src/main/res/drawable-v24/ic_baseline_password.xml" value="0.188" />
+        <entry key="..\:/Program Files/Capstone Project/Dokter/app/src/main/res/drawable-v24/ic_baseline_rectangle_gray.xml" value="0.188" />
+        <entry key="..\:/Program Files/Capstone Project/Dokter/app/src/main/res/drawable-v24/ic_baseline_weight.xml" value="0.188" />
         <entry key="..\:/Program Files/Capstone Project/Dokter/app/src/main/res/drawable-v24/ic_calendar.xml" value="0.19" />
         <entry key="..\:/Program Files/Capstone Project/Dokter/app/src/main/res/drawable-v24/ic_home.xml" value="0.19" />
+        <entry key="..\:/Program Files/Capstone Project/Dokter/app/src/main/res/drawable-v24/ic_profile_normal.xml" value="0.188" />
         <entry key="..\:/Program Files/Capstone Project/Dokter/app/src/main/res/drawable-v24/ic_user.xml" value="0.19" />
         <entry key="..\:/Program Files/Capstone Project/Dokter/app/src/main/res/drawable-v24/nav_placeholder.xml" value="0.19" />
+        <entry key="..\:/Program Files/Capstone Project/Dokter/app/src/main/res/drawable-v24/splash_background.xml" value="0.1" />
         <entry key="..\:/Program Files/Capstone Project/Dokter/app/src/main/res/drawable/ic_arrow_left.xml" value="0.19" />
         <entry key="..\:/Program Files/Capstone Project/Dokter/app/src/main/res/drawable/ic_clock.xml" value="0.19" />
+        <entry key="..\:/Program Files/Capstone Project/Dokter/app/src/main/res/layout/activity_auth.xml" value="0.27447916666666666" />
         <entry key="..\:/Program Files/Capstone Project/Dokter/app/src/main/res/layout/activity_main.xml" value="0.27447916666666666" />
         <entry key="..\:/Program Files/Capstone Project/Dokter/app/src/main/res/layout/activity_schedule.xml" value="0.264" />
         <entry key="..\:/Program Files/Capstone Project/Dokter/app/src/main/res/layout/fragment_home.xml" value="0.27447916666666666" />
+        <entry key="..\:/Program Files/Capstone Project/Dokter/app/src/main/res/layout/fragment_login.xml" value="0.27447916666666666" />
         <entry key="..\:/Program Files/Capstone Project/Dokter/app/src/main/res/layout/fragment_new_schedule.xml" value="0.27447916666666666" />
         <entry key="..\:/Program Files/Capstone Project/Dokter/app/src/main/res/layout/fragment_profile.xml" value="0.2604166666666667" />
         <entry key="..\:/Program Files/Capstone Project/Dokter/app/src/main/res/layout/fragment_schedule.xml" value="0.264" />
+        <entry key="..\:/Program Files/Capstone Project/Dokter/app/src/main/res/layout/fragment_sign_up.xml" value="0.27447916666666666" />
+        <entry key="..\:/Program Files/Capstone Project/Dokter/app/src/main/res/layout/fragment_sign_up_2.xml" value="0.27447916666666666" />
         <entry key="..\:/Program Files/Capstone Project/Dokter/app/src/main/res/layout/item_loading.xml" value="0.27447916666666666" />
         <entry key="..\:/Program Files/Capstone Project/Dokter/app/src/main/res/layout/item_patient.xml" value="0.2734375" />
         <entry key="..\:/Program Files/Capstone Project/Dokter/app/src/main/res/layout/item_schedule.xml" value="0.27447916666666666" />

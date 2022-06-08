@@ -8,12 +8,19 @@
     <string name="time">00:00</string>
     <string name="set_schedule">Set Schedule For Patient</string>
     <string name="until">Until</string>
+
     <string-array name="title_array">
         <item>Medicine</item>
         <item>Rest</item>
         <item>Consult</item>
         <item>Treatment</item>
     </string-array>
+
+    <string-array name="gender_array">
+        <item>Male</item>
+        <item>Female</item>
+    </string-array>
+
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="schedule">Schedule</string>
     <string name="home">Home</string>
@@ -32,4 +39,20 @@
     <string name="action">Action Schedule</string>
     <string name="sub_home">This is your Patient List</string>
     <string name="retry">Retry</string>
+    <string name="log_into">Log into your account</string>
+    <string name="email">Email</string>
+    <string name="hint_email">Email (abc@123.com)</string>
+    <string name="password">Password</string>
+    <string name="register_here">Don’t have an account? Sign Up</string>
+    <string name="login">LOGIN</string>
+    <string name="tell_me">Tell me more about yourself</string>
+    <string name="age">Your Age</string>
+    <string name="gender">Your Gender</string>
+    <string name="weight">Your Weight (Kg)</string>
+    <string name="login_here">Already have an account? Log In</string>
+    <string name="next">NEXT</string>
+    <string name="create_account">Create your Account</string>
+    <string name="hint_username">Username (abc123)</string>
+    <string name="create">CREATE</string>
+    <string name="something_went_wrong">Something went wrong</string>
 </resources>
