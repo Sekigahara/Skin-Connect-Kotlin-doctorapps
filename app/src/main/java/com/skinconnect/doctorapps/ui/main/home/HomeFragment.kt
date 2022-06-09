@@ -5,24 +5,24 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.skinconnect.doctorapps.data.entity.response.ListPatientItem
 import com.skinconnect.doctorapps.data.local.UserPreferences
+import com.skinconnect.doctorapps.data.repository.PatientRepository
 import com.skinconnect.doctorapps.databinding.FragmentHomeBinding
 import com.skinconnect.doctorapps.ui.helper.BaseFragment
-import com.skinconnect.doctorapps.ui.helper.LoadingStateAdapter
 import com.skinconnect.doctorapps.ui.helper.ViewModelFactory
 
-private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
+private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "user_data")
 
 class HomeFragment : BaseFragment() {
 
     private lateinit var preference: UserPreferences
-    private lateinit var homeViewModel : HomeViewModel
-    private lateinit var token : String
 
     override fun onCreateView(
         inflater : LayoutInflater, container : ViewGroup?,
@@ -51,26 +51,37 @@ class HomeFragment : BaseFragment() {
 
     override fun setupViewModel() {
         val binding = binding as FragmentHomeBinding
-        val factory : ViewModelFactory? = context?.let { ViewModelFactory.getPatientInstance(it) }
-        homeViewModel = (factory?.let {
-            ViewModelProvider(
-                this,
-                it
-            )
-        }?.get(HomeViewModel::class.java) ?: homeViewModel.getUserToken().observe(viewLifecycleOwner){ token ->
-            this.token = token
-            if (token.isNotEmpty()) {
-                val adapter = HomeAdapter()
-                binding.rvPatient.adapter = adapter.withLoadStateFooter(
-                    footer = LoadingStateAdapter {
-                        adapter.retry()
+        val factory = ViewModelFactory.getPatientInstance(requireContext())
+        val viewModel: HomeViewModel by viewModels { factory }
+        this.viewModel = viewModel
+
+        viewModel.getUserToken().observe(viewLifecycleOwner){ token ->
+            if (token.isNotEmpty()){
+                viewModel.getPatient(token).observe(viewLifecycleOwner){result ->
+                    if (result != null){
+                        when(result) {
+                            is PatientRepository.Result.Loading -> {
+                                binding.progressBar.visibility = View.VISIBLE
+                            }
+                            is PatientRepository.Result.Success -> {
+                                binding.progressBar.visibility = View.GONE
+                                val schedule = result.data.listPatient
+                                val listPatientAdapter = HomeAdapter(schedule as ArrayList<ListPatientItem>)
+                                binding.rvPatient.adapter = listPatientAdapter
+                            }
+                            is PatientRepository.Result.Error -> {
+                                binding.progressBar.visibility = View.GONE
+                                Toast.makeText(
+                                    context,
+                                    "Failure : " + result.error,
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
+                        }
                     }
-                )
-                homeViewModel.getPatient(token).observe(viewLifecycleOwner) { Result ->
-                    adapter.submitData(lifecycle, Result)
                 }
             }
-        }) as HomeViewModel
+        }
     }
 
     override fun setupAction() {    }

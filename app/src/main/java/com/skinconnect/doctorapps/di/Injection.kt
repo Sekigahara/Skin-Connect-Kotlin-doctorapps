@@ -9,7 +9,6 @@ import com.skinconnect.doctorapps.data.remote.ApiConfig
 import com.skinconnect.doctorapps.data.repository.AuthRepository
 import com.skinconnect.doctorapps.data.repository.PatientRepository
 import com.skinconnect.doctorapps.data.repository.ScheduleRepository
-import com.skinconnect.doctorapps.data.room.dbpatient.PatientDatabase
 import com.skinconnect.doctorapps.data.room.dbschedule.ScheduleDatabase
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "user_data")
@@ -30,8 +29,7 @@ object Injection {
     }
     fun providePatient(context: Context): PatientRepository {
         val service = ApiConfig.getApiService(context)
-        val database = PatientDatabase.getDatabase(context)
         val preferences = UserPreferences.getInstance(context.dataStore)
-        return PatientRepository(service, preferences, database)
+        return PatientRepository(service, preferences)
     }
 }

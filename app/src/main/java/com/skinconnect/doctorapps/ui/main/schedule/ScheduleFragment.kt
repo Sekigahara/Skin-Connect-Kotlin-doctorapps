@@ -20,7 +20,7 @@ import com.skinconnect.doctorapps.databinding.FragmentScheduleBinding
 import com.skinconnect.doctorapps.ui.helper.BaseFragment
 import com.skinconnect.doctorapps.ui.helper.ViewModelFactory
 
-private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
+private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "user_data")
 
 class ScheduleFragment : BaseFragment() {
 

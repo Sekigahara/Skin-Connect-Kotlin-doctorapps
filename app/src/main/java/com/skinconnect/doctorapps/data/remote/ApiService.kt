@@ -29,8 +29,6 @@ interface ApiService {
 
     @GET("users")
     suspend fun getPatient(
-        @Header("Authorization") authorization : String,
-        @Query("page") page: Int? = null,
-        @Query("size") size: Int? = null): PatientResponse
+        @Header("Authorization") authorization : String): PatientResponse
 
 }

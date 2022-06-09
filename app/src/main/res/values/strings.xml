@@ -55,4 +55,8 @@
     <string name="hint_username">Username (abc123)</string>
     <string name="create">CREATE</string>
     <string name="something_went_wrong">Something went wrong</string>
+    <string name="logout">Logout</string>
+    <string name="are_you_sure">Are you sure?</string>
+    <string name="no">NOOO</string>
+    <string name="yes">YESSS</string>
 </resources>
