@@ -67,7 +67,7 @@ class ScheduleFragment : BaseFragment() {
         val viewModel: ScheduleViewModel by viewModels { factory }
         this.viewModel = viewModel
 
-        viewModel.getUserToken().observe(this){ token ->
+        viewModel.getDoctorToken().observe(this){ token ->
             if (token.isNotEmpty()){
                 viewModel.getSchedule(token).observe(this){result ->
                     if (result != null){

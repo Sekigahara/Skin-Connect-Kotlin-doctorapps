@@ -45,9 +45,13 @@ class ScheduleRepository(
         }
     }
 
-    fun getUserToken() = preferences.getUserToken()
+    fun getDoctorToken() = preferences.getDoctorToken()
 
-    suspend fun saveUserToken(token: String) = preferences.saveUserToken(token)
+    suspend fun saveDoctorToken(token: String) = preferences.saveDoctorToken(token)
+
+    fun getDoctorId() = preferences.getDoctorId()
+
+    suspend fun saveDoctorId(id: String) = preferences.saveDoctorId(id)
 
     companion object {
         @Volatile

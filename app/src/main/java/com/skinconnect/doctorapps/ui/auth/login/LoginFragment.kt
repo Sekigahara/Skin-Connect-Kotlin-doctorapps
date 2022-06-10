@@ -64,7 +64,7 @@ class LoginFragment : AuthFragment() {
                 val response = it as Result.Success<*>
                 val data = response.data as LoginResponse
                 viewModel.saveUserToken(data.token)
-                viewModel.saveUserId(data.userId)
+                viewModel.saveUserId(data.doctorId)
                 val intent = Intent(requireContext(), MainActivity::class.java)
                 startActivity(intent)
                 requireActivity().finish()

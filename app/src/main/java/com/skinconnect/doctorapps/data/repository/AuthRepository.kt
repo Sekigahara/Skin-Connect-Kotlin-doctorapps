@@ -27,13 +27,13 @@ class AuthRepository private constructor(
         catchError(exception, liveData)
     }
 
-    fun getUserToken() = preferences.getUserToken()
+    fun getDoctorToken() = preferences.getDoctorToken()
 
-    suspend fun saveUserToken(token: String) = preferences.saveUserToken(token)
+    suspend fun saveDoctorToken(token: String) = preferences.saveDoctorToken(token)
 
-    fun getUserId() = preferences.getUserId()
+    fun getDoctorId() = preferences.getDoctorId()
 
-    suspend fun saveUserId(id: String) = preferences.saveUserId(id)
+    suspend fun saveDoctorId(id: String) = preferences.saveDoctorId(id)
 
     companion object {
         @Volatile

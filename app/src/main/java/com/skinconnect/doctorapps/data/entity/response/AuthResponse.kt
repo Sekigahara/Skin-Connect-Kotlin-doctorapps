@@ -4,8 +4,8 @@ import com.google.gson.annotations.SerializedName
 import com.skinconnect.doctorapps.data.entity.RegisterDetails
 
 open class LoginResponse(
-	@field:SerializedName("user_id")
-	val userId: String,
+	@field:SerializedName("doctor_id")
+	val doctorId: String,
 
 	@field:SerializedName("token")
 	val token: String,

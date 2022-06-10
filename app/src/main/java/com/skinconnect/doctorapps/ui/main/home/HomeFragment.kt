@@ -55,7 +55,7 @@ class HomeFragment : BaseFragment() {
         val viewModel: HomeViewModel by viewModels { factory }
         this.viewModel = viewModel
 
-        viewModel.getUserToken().observe(viewLifecycleOwner){ token ->
+        viewModel.getDoctorToken().observe(viewLifecycleOwner){ token ->
             if (token.isNotEmpty()){
                 viewModel.getPatient(token).observe(viewLifecycleOwner){result ->
                     if (result != null){

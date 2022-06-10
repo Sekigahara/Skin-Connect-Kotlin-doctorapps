@@ -10,7 +10,6 @@ import com.skinconnect.doctorapps.data.repository.ScheduleRepository
 import com.skinconnect.doctorapps.di.Injection
 import com.skinconnect.doctorapps.ui.auth.LoginViewModel
 import com.skinconnect.doctorapps.ui.auth.RegisterViewModel
-import com.skinconnect.doctorapps.ui.auth.SplashViewModel
 import com.skinconnect.doctorapps.ui.main.home.HomeViewModel
 import com.skinconnect.doctorapps.ui.main.schedule.ScheduleViewModel
 
@@ -23,8 +22,6 @@ class ViewModelFactory private constructor(
             return RegisterViewModel(repository as AuthRepository) as T
         if (modelClass.isAssignableFrom(LoginViewModel::class.java))
             return LoginViewModel(repository as AuthRepository) as T
-        if (modelClass.isAssignableFrom(SplashViewModel::class.java))
-            return SplashViewModel(repository as AuthRepository) as T
         if (modelClass.isAssignableFrom(ScheduleViewModel::class.java))
             return ScheduleViewModel(repository as ScheduleRepository) as T
         if (modelClass.isAssignableFrom(HomeViewModel::class.java))

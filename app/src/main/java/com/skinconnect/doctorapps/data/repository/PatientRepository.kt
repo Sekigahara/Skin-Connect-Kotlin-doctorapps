@@ -29,6 +29,23 @@ class PatientRepository(
         }
     }
 
-    fun getUserToken() = preferences.getUserToken()
+    fun getDoctorToken() = preferences.getDoctorToken()
+
+    suspend fun saveDoctorToken(token: String) = preferences.saveDoctorToken(token)
+
+    fun getDoctorId() = preferences.getDoctorId()
+
+    suspend fun saveDoctorId(id: String) = preferences.saveDoctorId(id)
+
+    companion object {
+        @Volatile
+        private var instance: PatientRepository? = null
+
+        fun getInstance(service: ApiService, preferences: UserPreferences) =
+            instance ?: synchronized(this) {
+                instance ?: PatientRepository(service,
+                    preferences)
+            }.also { instance = it }
+    }
 
 }

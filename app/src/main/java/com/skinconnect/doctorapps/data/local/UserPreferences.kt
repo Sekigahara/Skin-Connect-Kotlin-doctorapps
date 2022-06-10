@@ -7,16 +7,16 @@ import androidx.datastore.preferences.core.stringPreferencesKey
 import kotlinx.coroutines.flow.map
 
 class UserPreferences private constructor(private val dataStore: DataStore<Preferences>) {
-    private val userToken = stringPreferencesKey("token_key")
-    private val userId = stringPreferencesKey("id_key")
+    private val doctorToken = stringPreferencesKey("token_key")
+    private val doctorId = stringPreferencesKey("id_key")
 
-    fun getUserToken() = dataStore.data.map { it[userToken] ?: "" }
+    fun getDoctorToken() = dataStore.data.map { it[doctorToken] ?: "" }
 
-    suspend fun saveUserToken(token: String) = dataStore.edit { it[userToken] = token }
+    suspend fun saveDoctorToken(token: String) = dataStore.edit { it[doctorToken] = token }
 
-    fun getUserId() = dataStore.data.map { it[userId] ?: "" }
+    fun getDoctorId() = dataStore.data.map { it[doctorId] ?: "" }
 
-    suspend fun saveUserId(id: String) = dataStore.edit { it[userId] = id }
+    suspend fun saveDoctorId(id: String) = dataStore.edit { it[doctorId] = id }
 
     companion object {
         @Volatile

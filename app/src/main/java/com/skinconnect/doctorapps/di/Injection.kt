@@ -25,11 +25,11 @@ object Injection {
         val service = ApiConfig.getApiService(context)
         val database = ScheduleDatabase.getDatabase(context)
         val preferences = UserPreferences.getInstance(context.dataStore)
-        return ScheduleRepository(service, database, preferences)
+        return ScheduleRepository.getInstance(service, database, preferences)
     }
     fun providePatient(context: Context): PatientRepository {
         val service = ApiConfig.getApiService(context)
         val preferences = UserPreferences.getInstance(context.dataStore)
-        return PatientRepository(service, preferences)
+        return PatientRepository.getInstance(service, preferences)
     }
 }
