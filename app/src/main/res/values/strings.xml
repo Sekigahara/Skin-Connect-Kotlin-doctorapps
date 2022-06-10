@@ -1,3 +1,62 @@
 <resources>
     <string name="app_name">Doctor Skin Connect</string>
+    <string name="input_error_email">Invalid Email Entered</string>
+    <string name="input_error_password">Invalid Password Entered</string>
+    <string name="title_schedule">Choose Title</string>
+    <string name="send_schedule">Send Schedule</string>
+    <string name="description">Description</string>
+    <string name="time">00:00</string>
+    <string name="set_schedule">Set Schedule For Patient</string>
+    <string name="until">Until</string>
+
+    <string-array name="title_array">
+        <item>Medicine</item>
+        <item>Rest</item>
+        <item>Consult</item>
+        <item>Treatment</item>
+    </string-array>
+
+    <string-array name="gender_array">
+        <item>Male</item>
+        <item>Female</item>
+    </string-array>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="schedule">Schedule</string>
+    <string name="home">Home</string>
+    <string name="profile">Profile</string>
+    <string name="set_time">Set Time :</string>
+    <string name="start">Start :</string>
+    <string name="end">End :</string>
+    <string name="avatar">avatar</string>
+    <string name="username">username</string>
+    <string name="message_validation">Enter your %1$s</string>
+    <string name="content_desc">desc content</string>
+    <string name="greetings">Hello Doctor</string>
+    <string name="date">Sunday</string>
+    <string name="sub_schedule">This is your Patient Schedule</string>
+    <string name="medicine">Medicine</string>
+    <string name="action">Action Schedule</string>
+    <string name="sub_home">This is your Patient List</string>
+    <string name="retry">Retry</string>
+    <string name="log_into">Log into your account</string>
+    <string name="email">Email</string>
+    <string name="hint_email">Email (abc@123.com)</string>
+    <string name="password">Password</string>
+    <string name="register_here">Don’t have an account? Sign Up</string>
+    <string name="login">LOGIN</string>
+    <string name="tell_me">Tell me more about yourself</string>
+    <string name="age">Your Age</string>
+    <string name="gender">Your Gender</string>
+    <string name="weight">Your Weight (Kg)</string>
+    <string name="login_here">Already have an account? Log In</string>
+    <string name="next">NEXT</string>
+    <string name="create_account">Create your Account</string>
+    <string name="hint_username">Username (abc123)</string>
+    <string name="create">CREATE</string>
+    <string name="something_went_wrong">Something went wrong</string>
+    <string name="logout">Logout</string>
+    <string name="are_you_sure">Are you sure?</string>
+    <string name="no">NOOO</string>
+    <string name="yes">YESSS</string>
 </resources>
