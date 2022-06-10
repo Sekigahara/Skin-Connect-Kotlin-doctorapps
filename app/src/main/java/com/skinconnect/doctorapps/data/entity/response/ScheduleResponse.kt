@@ -6,7 +6,7 @@ import kotlinx.parcelize.Parcelize
 
 data class ScheduleResponse(
     @field:SerializedName("schedule")
-    val schedule: List<ListScheduleItem>,
+    val listSchedule: List<ListScheduleItem>,
 
     @field:SerializedName("error")
     val error: Boolean,

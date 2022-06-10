@@ -13,5 +13,5 @@ class HomeViewModel(override val repository: PatientRepository): BaseViewModel(r
     fun getDoctorId() = repository.getDoctorId().asLiveData()
     fun getDoctorToken() = repository.getDoctorToken().asLiveData()
 
-    fun getPatient(token: String) = repository.getPatient(token)
+    fun getPatient(idDoctor: String, token: String) = repository.getPatient(idDoctor, token)
 }

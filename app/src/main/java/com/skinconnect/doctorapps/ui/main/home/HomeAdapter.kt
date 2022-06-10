@@ -3,7 +3,6 @@ package com.skinconnect.doctorapps.ui.main.home
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.skinconnect.doctorapps.data.entity.response.ListPatientItem
 import com.skinconnect.doctorapps.databinding.ItemPatientBinding
 
@@ -19,7 +18,7 @@ class HomeAdapter(private val listPatient: ArrayList<ListPatientItem>) : Recycle
     override fun onBindViewHolder(holder : ListViewHolder, position : Int) {
         val patient = listPatient[position]
         holder.binding.apply {
-            username.text = patient.name
+            username.text = patient.username
         }
     }
 

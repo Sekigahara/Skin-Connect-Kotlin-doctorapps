@@ -24,6 +24,6 @@ data class ListPatientItem(
     @field:SerializedName("photoUrl")
     val photoUrl: String,
 
-    @field:SerializedName("name")
-    val name: String,
+    @field:SerializedName("username")
+    val username: String,
 ): Parcelable

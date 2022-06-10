@@ -11,17 +11,18 @@ import okhttp3.RequestBody
 
 class ScheduleViewModel(override val repository : ScheduleRepository): BaseViewModel(repository) {
 
-    fun saveUserToken(token: String) = viewModelScope.launch { repository.saveDoctorToken(token) }
-    fun saveUserId(id: String) = viewModelScope.launch { repository.saveDoctorId(id) }
-    fun getDoctorId() = repository.getDoctorId().asLiveData()
     fun getDoctorToken() = repository.getDoctorToken().asLiveData()
+    fun getDoctorId() = repository.getDoctorId().asLiveData()
+    fun getUserId() = repository.getUserId().asLiveData()
 
     fun addSchedule(
+        doctorId : String,
+        userId : String,
         token : String,
         title : AutoCompleteTextView,
         descMedia : RequestBody,
         time : String
-    ) : LiveData<ScheduleRepository.Result<AddScheduleResponse>> = repository.addSchedule(token,title,descMedia,time)
+    ) : LiveData<ScheduleRepository.Result<AddScheduleResponse>> = repository.addSchedule(doctorId,userId,token,title,descMedia,time)
 
-    fun getSchedule(token : String) = repository.schedule(token)
+    fun getSchedule(idDoctor: String, token : String) = repository.getSchedule(idDoctor,token)
 }

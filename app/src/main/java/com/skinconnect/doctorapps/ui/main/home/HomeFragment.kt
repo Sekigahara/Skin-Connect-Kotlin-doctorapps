@@ -23,6 +23,7 @@ private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(na
 class HomeFragment : BaseFragment() {
 
     private lateinit var preference: UserPreferences
+    private var idDoctor =""
 
     override fun onCreateView(
         inflater : LayoutInflater, container : ViewGroup?,
@@ -54,10 +55,11 @@ class HomeFragment : BaseFragment() {
         val factory = ViewModelFactory.getPatientInstance(requireContext())
         val viewModel: HomeViewModel by viewModels { factory }
         this.viewModel = viewModel
+        this.idDoctor = viewModel.getDoctorId().toString()
 
         viewModel.getDoctorToken().observe(viewLifecycleOwner){ token ->
             if (token.isNotEmpty()){
-                viewModel.getPatient(token).observe(viewLifecycleOwner){result ->
+                viewModel.getPatient(idDoctor,token ).observe(viewLifecycleOwner){result ->
                     if (result != null){
                         when(result) {
                             is PatientRepository.Result.Loading -> {
@@ -65,8 +67,8 @@ class HomeFragment : BaseFragment() {
                             }
                             is PatientRepository.Result.Success -> {
                                 binding.progressBar.visibility = View.GONE
-                                val schedule = result.data.listPatient
-                                val listPatientAdapter = HomeAdapter(schedule as ArrayList<ListPatientItem>)
+                                val patient = result.data.listPatient
+                                val listPatientAdapter = HomeAdapter(patient as ArrayList<ListPatientItem>)
                                 binding.rvPatient.adapter = listPatientAdapter
                             }
                             is PatientRepository.Result.Error -> {

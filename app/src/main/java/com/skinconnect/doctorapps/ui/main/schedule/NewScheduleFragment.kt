@@ -119,7 +119,7 @@ class NewScheduleFragment : BaseFragment() {
             val descMedia = description.toRequestBody("text/plain".toMediaType())
             val tvTime = "$timeStart - $timeEnd"
 
-            scheduleViewModel.addSchedule(token,title,descMedia, tvTime).observe(viewLifecycleOwner) { result ->
+            scheduleViewModel.addSchedule(doctorId = "", userId = "", token,title,descMedia, tvTime).observe(viewLifecycleOwner) { result ->
                 if (result != null){
                     when(result) {
                         is ScheduleRepository.Result.Loading -> {

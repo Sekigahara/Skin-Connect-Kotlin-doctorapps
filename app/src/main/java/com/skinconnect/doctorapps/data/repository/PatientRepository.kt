@@ -18,10 +18,10 @@ class PatientRepository(
         object Loading : Result<Nothing>()
     }
 
-    fun getPatient(token : String): LiveData<Result<PatientResponse>> = liveData {
+    fun getPatient(idDoctor: String, token : String): LiveData<Result<PatientResponse>> = liveData {
         emit(Result.Loading)
         try {
-            val client = service.getPatient("Bearer $token")
+            val client = service.getPatient(idDoctor,"Bearer $token")
             emit(Result.Success(client))
         } catch (e : Exception) {
             Log.d("PatientRepository", "patient: ${e.message.toString()} ")
@@ -30,11 +30,9 @@ class PatientRepository(
     }
 
     fun getDoctorToken() = preferences.getDoctorToken()
-
     suspend fun saveDoctorToken(token: String) = preferences.saveDoctorToken(token)
 
     fun getDoctorId() = preferences.getDoctorId()
-
     suspend fun saveDoctorId(id: String) = preferences.saveDoctorId(id)
 
     companion object {

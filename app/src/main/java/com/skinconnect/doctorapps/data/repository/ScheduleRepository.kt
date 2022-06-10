@@ -23,10 +23,10 @@ class ScheduleRepository(
         object Loading : Result<Nothing>()
     }
 
-    fun addSchedule(token : String, title : AutoCompleteTextView, description : RequestBody, time : String): LiveData<Result<AddScheduleResponse>> = liveData {
+    fun addSchedule(doctorId: String, userId : String,  token : String, title : AutoCompleteTextView, description : RequestBody, time : String): LiveData<Result<AddScheduleResponse>> = liveData {
         emit(Result.Loading)
         try {
-            val client = service.addSchedule("Bearer $token",title,description,time)
+            val client = service.addSchedule(doctorId, userId,"Bearer $token",title,description,time)
             emit(Result.Success(client))
         } catch (e : Exception) {
             Log.d("ScheduleRepository", "addSchedule: ${e.message.toString()} ")
@@ -34,10 +34,10 @@ class ScheduleRepository(
         }
     }
 
-    fun schedule(token : String): LiveData<Result<ScheduleResponse>> = liveData {
+    fun getSchedule(idDoctor: String, token : String): LiveData<Result<ScheduleResponse>> = liveData {
         emit(Result.Loading)
         try {
-            val client = service.schedule("Bearer $token")
+            val client = service.getSchedule(idDoctor,"Bearer $token")
             emit(Result.Success(client))
         } catch (e : Exception) {
             Log.d("ScheduleRepository", "schedule: ${e.message.toString()} ")
@@ -46,6 +46,10 @@ class ScheduleRepository(
     }
 
     fun getDoctorToken() = preferences.getDoctorToken()
+
+    fun getUserId() = preferences.getUserId()
+
+    suspend fun saveUserId(id: String) = preferences.saveUserId(id)
 
     suspend fun saveDoctorToken(token: String) = preferences.saveDoctorToken(token)
 

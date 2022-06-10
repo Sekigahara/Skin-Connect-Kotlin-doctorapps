@@ -1,6 +1,5 @@
 package com.skinconnect.doctorapps.ui.main.schedule
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -28,6 +27,7 @@ class ScheduleFragment : BaseFragment() {
     private lateinit var _tvDate : String
     private lateinit var _backButton : ImageButton
     private lateinit var preference: UserPreferences
+    private var idDoctor = ""
 
     override fun onCreateView(
         inflater : LayoutInflater,
@@ -60,16 +60,16 @@ class ScheduleFragment : BaseFragment() {
         _backButton = binding.buttonBackSchedule
     }
 
-    @SuppressLint("FragmentLiveDataObserve")
     override fun setupViewModel() {
         val binding = binding as FragmentScheduleBinding
         val factory = ViewModelFactory.getScheduleInstance(requireContext())
         val viewModel: ScheduleViewModel by viewModels { factory }
         this.viewModel = viewModel
+        this.idDoctor = viewModel.getDoctorId().toString()
 
-        viewModel.getDoctorToken().observe(this){ token ->
+        viewModel.getDoctorToken().observe(viewLifecycleOwner){ token ->
             if (token.isNotEmpty()){
-                viewModel.getSchedule(token).observe(this){result ->
+                viewModel.getSchedule(idDoctor,token).observe(viewLifecycleOwner){ result ->
                     if (result != null){
                         when(result) {
                             is ScheduleRepository.Result.Loading -> {
@@ -77,7 +77,7 @@ class ScheduleFragment : BaseFragment() {
                             }
                             is ScheduleRepository.Result.Success -> {
                                 binding.progressBar.visibility = View.GONE
-                                val schedule = result.data.schedule
+                                val schedule = result.data.listSchedule
                                 val listScheduleAdapter = ScheduleAdapter(schedule as ArrayList<ListScheduleItem>)
                                 binding.rvSchedule.adapter = listScheduleAdapter
                             }
