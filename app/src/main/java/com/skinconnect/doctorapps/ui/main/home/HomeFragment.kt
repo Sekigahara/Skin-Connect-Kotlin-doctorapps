@@ -22,18 +22,19 @@ private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(na
 
 class HomeFragment : BaseFragment() {
 
-    private lateinit var preference: UserPreferences
-    private var idDoctor =""
+    private lateinit var preference : UserPreferences
+    private var idDoctor = ""
+    private var token = ""
 
     override fun onCreateView(
         inflater : LayoutInflater, container : ViewGroup?,
         savedInstanceState : Bundle?
     ) : View {
-       viewBinding = FragmentHomeBinding.inflate(layoutInflater, container, false)
+        viewBinding = FragmentHomeBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view : View, savedInstanceState : Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val binding = binding as FragmentHomeBinding
         preference = UserPreferences.getInstance(requireContext().dataStore)
@@ -53,40 +54,44 @@ class HomeFragment : BaseFragment() {
     override fun setupViewModel() {
         val binding = binding as FragmentHomeBinding
         val factory = ViewModelFactory.getPatientInstance(requireContext())
-        val viewModel: HomeViewModel by viewModels { factory }
+        val viewModel : HomeViewModel by viewModels { factory }
         this.viewModel = viewModel
-        this.idDoctor = viewModel.getDoctorId().toString()
 
-        viewModel.getDoctorToken().observe(viewLifecycleOwner){ token ->
-            if (token.isNotEmpty()){
-                viewModel.getPatient(idDoctor,token ).observe(viewLifecycleOwner){result ->
-                    if (result != null){
-                        when(result) {
-                            is PatientRepository.Result.Loading -> {
-                                binding.progressBar.visibility = View.VISIBLE
-                            }
-                            is PatientRepository.Result.Success -> {
-                                binding.progressBar.visibility = View.GONE
-                                val patient = result.data.listPatient
-                                val listPatientAdapter = HomeAdapter(patient as ArrayList<ListPatientItem>)
-                                binding.rvPatient.adapter = listPatientAdapter
-                            }
-                            is PatientRepository.Result.Error -> {
-                                binding.progressBar.visibility = View.GONE
-                                Toast.makeText(
-                                    context,
-                                    "Failure : " + result.error,
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                            }
-                        }
+        viewModel.getDoctorToken().observe(requireActivity()) { token = it
+            if (token.isNotBlank() && token.isNotEmpty())
+                viewModel.getPatient(idDoctor, token)
+        }
+
+        viewModel.getDoctorId().observe(requireActivity()) { idDoctor = it
+            if (idDoctor.isNotBlank() && idDoctor.isNotEmpty())
+                viewModel.getPatient(idDoctor, token)
+        }
+        viewModel.getPatient(idDoctor,token).observe(requireActivity()){ result ->
+            if (result != null){
+                when(result) {
+                    is PatientRepository.Result.Loading -> {
+                        binding.progressBar.visibility = View.VISIBLE
+                    }
+                    is PatientRepository.Result.Success -> {
+                        binding.progressBar.visibility = View.GONE
+                        val patient = result.data.listPatient
+                        val listPatientAdapter = HomeAdapter(patient as ArrayList<ListPatientItem>)
+                        binding.rvPatient.adapter = listPatientAdapter
+                    }
+                    is PatientRepository.Result.Error -> {
+                        binding.progressBar.visibility = View.GONE
+                        Toast.makeText(
+                            context,
+                            "Failure : " + result.error,
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
                 }
             }
         }
+
     }
 
-    override fun setupAction() {    }
 
-
+    override fun setupAction() {}
 }

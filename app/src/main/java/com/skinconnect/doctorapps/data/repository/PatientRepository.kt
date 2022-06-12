@@ -33,7 +33,7 @@ class PatientRepository(
     suspend fun saveDoctorToken(token: String) = preferences.saveDoctorToken(token)
 
     fun getDoctorId() = preferences.getDoctorId()
-    suspend fun saveDoctorId(id: String) = preferences.saveDoctorId(id)
+    suspend fun saveDoctorId(idDoctor : String) = preferences.saveDoctorId(idDoctor)
 
     companion object {
         @Volatile

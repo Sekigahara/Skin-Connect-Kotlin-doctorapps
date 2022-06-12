@@ -1,10 +1,9 @@
 package com.skinconnect.doctorapps.data.remote
 
-import android.widget.AutoCompleteTextView
+import com.skinconnect.doctorapps.data.entity.AddScheduleRequest
 import com.skinconnect.doctorapps.data.entity.LoginRequest
 import com.skinconnect.doctorapps.data.entity.RegisterRequest
 import com.skinconnect.doctorapps.data.entity.response.*
-import okhttp3.RequestBody
 import retrofit2.http.*
 
 interface ApiService {
@@ -15,14 +14,13 @@ interface ApiService {
     @POST("doctors/register")
     suspend fun register(@Body request: RegisterRequest) : RegisterResponse
 
-    @POST("doctors/{doctorId}/schedule/{userId}")
+    @POST("doctors/{id_doctor}/schedule/{id_user}")
     suspend fun  addSchedule(
-        @Path("doctorId") doctorId: String,
-        @Path("userId") userId : String,
+        @Path("id_doctor") idDoctor: String,
+        @Path("id_user") idUser : String,
         @Header("Authorization") authorization : String,
-        @Part("title") title : AutoCompleteTextView,
-        @Part("description") description : RequestBody,
-        @Part("time") time : String
+        @Part("time") time : String,
+        @Body request: AddScheduleRequest,
     ): AddScheduleResponse
 
     @GET("doctors/{id}/schedule")

@@ -11,13 +11,12 @@ import android.widget.*
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import com.skinconnect.doctorapps.R
+import com.skinconnect.doctorapps.data.entity.AddScheduleRequest
 import com.skinconnect.doctorapps.data.repository.ScheduleRepository
 import com.skinconnect.doctorapps.databinding.FragmentNewScheduleBinding
 import com.skinconnect.doctorapps.ui.helper.BaseFragment
 import com.skinconnect.doctorapps.ui.helper.NoFilterArrayAdapter
 import com.skinconnect.doctorapps.ui.helper.ViewModelFactory
-import okhttp3.MediaType.Companion.toMediaType
-import okhttp3.RequestBody.Companion.toRequestBody
 import java.util.*
 
 
@@ -30,6 +29,9 @@ class NewScheduleFragment : BaseFragment() {
     private lateinit var timeEnd : TextView
     private lateinit var sendButton : Button
     private lateinit var token : String
+    private lateinit var addScheduleRequest : AddScheduleRequest
+    private var idDoctor = ""
+    private var idUser = ""
 
     override fun onCreateView(
         inflater : LayoutInflater, container : ViewGroup?,
@@ -49,8 +51,8 @@ class NewScheduleFragment : BaseFragment() {
         val binding = binding as FragmentNewScheduleBinding
         titleAutoCompleteTextView = binding.autoCompleteTextViewSchedule
         val adapter = NoFilterArrayAdapter(requireContext(),
-        R.layout.list_item_dropdown,
-        arrayOf("Medicine","Rest","Consult","Treatment"))
+            R.layout.list_item_dropdown,
+            arrayOf("Medicine","Rest","Consult","Treatment"))
         titleAutoCompleteTextView.setAdapter(adapter)
         descriptionText = binding.cvDescription
         sendButton = binding.btnSend
@@ -109,17 +111,15 @@ class NewScheduleFragment : BaseFragment() {
         val viewModel: ScheduleViewModel by viewModels()
         this.viewModel = viewModel
         val description = binding.cvDescription.text.toString().trim()
+        val time = "$timeStart - $timeEnd"
 
         if (description.isEmpty()) {
             binding.cvDescription.error =
                 resources.getString(R.string.message_validation, "description")
         } else {
             showLoading(true)
-            val title = titleAutoCompleteTextView
-            val descMedia = description.toRequestBody("text/plain".toMediaType())
-            val tvTime = "$timeStart - $timeEnd"
 
-            scheduleViewModel.addSchedule(doctorId = "", userId = "", token,title,descMedia, tvTime).observe(viewLifecycleOwner) { result ->
+            scheduleViewModel.addSchedule(idDoctor, idUser, token, time, addScheduleRequest).observe(requireActivity()) { result ->
                 if (result != null){
                     when(result) {
                         is ScheduleRepository.Result.Loading -> {

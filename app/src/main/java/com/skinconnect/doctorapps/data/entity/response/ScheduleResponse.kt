@@ -18,8 +18,8 @@ data class ScheduleResponse(
 @Parcelize
 data class ListScheduleItem(
 
-    @field:SerializedName("id")
-    val id: String,
+    @field:SerializedName("id_doctor")
+    val id_doctor: String,
 
     @field:SerializedName("title")
     val title: String,
