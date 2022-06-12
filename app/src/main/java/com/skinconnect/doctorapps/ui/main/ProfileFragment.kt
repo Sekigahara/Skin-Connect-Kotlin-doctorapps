@@ -6,10 +6,11 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import androidx.fragment.app.viewModels
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.skinconnect.doctorapps.R
+import com.skinconnect.doctorapps.data.entity.response.DoctorDetailsResponse
 import com.skinconnect.doctorapps.databinding.FragmentProfileBinding
 import com.skinconnect.doctorapps.ui.auth.AuthActivity
 import com.skinconnect.doctorapps.ui.auth.AuthViewModel
@@ -17,7 +18,7 @@ import com.skinconnect.doctorapps.ui.helper.BaseFragment
 import com.skinconnect.doctorapps.ui.helper.ViewModelFactory
 
 class ProfileFragment : BaseFragment() {
-    private lateinit var logoutButton: FloatingActionButton
+    private lateinit var logoutButton: Button
 
     override fun onCreateView(
         inflater : LayoutInflater, container : ViewGroup?,
@@ -36,7 +37,13 @@ class ProfileFragment : BaseFragment() {
 
     override fun setupView() {
         val binding = binding as FragmentProfileBinding
-        logoutButton = binding.fabLogout
+        logoutButton = binding.btnLogout
+        val doctor = DoctorDetailsResponse(fullName = "", gender = "", address = "", age = 0, weight = 0)
+        binding.doctorFullNameTextView.text = doctor.fullName
+        binding.doctorGenderTextView.text = doctor.gender
+        binding.addressTextView.text = doctor.address
+        binding.doctorAgeTextView.text = "${doctor.age}"
+        binding.doctorWeightTextView.text = "${doctor.weight}"
     }
 
     override fun setupViewModel() {
@@ -64,5 +71,8 @@ class ProfileFragment : BaseFragment() {
                     requireActivity().finish()
                 }.show()
         }
+    }
+    companion object {
+        const val EXTRA_DOCTOR = "extra_doctor"
     }
 }

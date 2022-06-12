@@ -59,4 +59,7 @@
     <string name="are_you_sure">Are you sure?</string>
     <string name="no">NOOO</string>
     <string name="yes">YESSS</string>
+    <string name="doctor_s_profile">Doctor\'s Profile</string>
+    <string name="full_name">Full Name</string>
+    <string name="address">Address</string>
 </resources>

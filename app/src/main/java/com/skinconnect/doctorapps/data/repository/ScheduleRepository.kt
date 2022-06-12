@@ -4,6 +4,7 @@ import android.util.Log
 import android.widget.AutoCompleteTextView
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
+import com.skinconnect.doctorapps.data.entity.AddScheduleRequest
 import com.skinconnect.doctorapps.data.entity.response.AddScheduleResponse
 import com.skinconnect.doctorapps.data.entity.response.ScheduleResponse
 import com.skinconnect.doctorapps.data.local.UserPreferences
@@ -23,10 +24,10 @@ class ScheduleRepository(
         object Loading : Result<Nothing>()
     }
 
-    fun addSchedule(doctorId: String, userId : String,  token : String, title : AutoCompleteTextView, description : RequestBody, time : String): LiveData<Result<AddScheduleResponse>> = liveData {
+    fun addSchedule(idDoctor: String, idUser : String,  token : String,time : String, request : AddScheduleRequest): LiveData<Result<AddScheduleResponse>> = liveData {
         emit(Result.Loading)
         try {
-            val client = service.addSchedule(doctorId, userId,"Bearer $token",title,description,time)
+            val client = service.addSchedule(idDoctor, idUser,"Bearer $token", time, request)
             emit(Result.Success(client))
         } catch (e : Exception) {
             Log.d("ScheduleRepository", "addSchedule: ${e.message.toString()} ")

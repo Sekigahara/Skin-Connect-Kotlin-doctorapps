@@ -10,7 +10,7 @@ import kotlinx.parcelize.Parcelize
 @Entity(tableName = "patient")
 data class PatientEntity (
     @PrimaryKey
-    val id : String,
+    val idUser : String,
     val name : String,
     @ColumnInfo(name = "photo_url")
     val photoUrl : String

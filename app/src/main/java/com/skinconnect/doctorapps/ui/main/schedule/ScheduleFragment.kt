@@ -28,6 +28,7 @@ class ScheduleFragment : BaseFragment() {
     private lateinit var _backButton : ImageButton
     private lateinit var preference: UserPreferences
     private var idDoctor = ""
+    private var token = ""
 
     override fun onCreateView(
         inflater : LayoutInflater,
@@ -63,33 +64,40 @@ class ScheduleFragment : BaseFragment() {
     override fun setupViewModel() {
         val binding = binding as FragmentScheduleBinding
         val factory = ViewModelFactory.getScheduleInstance(requireContext())
-        val viewModel: ScheduleViewModel by viewModels { factory }
+        val viewModel : ScheduleViewModel by viewModels { factory }
         this.viewModel = viewModel
-        this.idDoctor = viewModel.getDoctorId().toString()
 
-        viewModel.getDoctorToken().observe(viewLifecycleOwner){ token ->
-            if (token.isNotEmpty()){
-                viewModel.getSchedule(idDoctor,token).observe(viewLifecycleOwner){ result ->
-                    if (result != null){
-                        when(result) {
-                            is ScheduleRepository.Result.Loading -> {
-                                binding.progressBar.visibility = View.VISIBLE
-                            }
-                            is ScheduleRepository.Result.Success -> {
-                                binding.progressBar.visibility = View.GONE
-                                val schedule = result.data.listSchedule
-                                val listScheduleAdapter = ScheduleAdapter(schedule as ArrayList<ListScheduleItem>)
-                                binding.rvSchedule.adapter = listScheduleAdapter
-                            }
-                            is ScheduleRepository.Result.Error -> {
-                                binding.progressBar.visibility = View.GONE
-                                Toast.makeText(
-                                    context,
-                                    "Failure : " + result.error,
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                            }
-                        }
+        viewModel.getDoctorToken().observe(requireActivity()) {
+            token = it
+            if (token.isNotBlank() && token.isNotEmpty())
+                viewModel.getSchedule(idDoctor, token)
+        }
+
+        viewModel.getDoctorId().observe(requireActivity()) {
+            idDoctor = it
+            if (idDoctor.isNotBlank() && idDoctor.isNotEmpty())
+                viewModel.getSchedule(idDoctor, token)
+        }
+        viewModel.getSchedule(idDoctor, token).observe(requireActivity()) { result ->
+            if (result != null) {
+                when (result) {
+                    is ScheduleRepository.Result.Loading -> {
+                        binding.progressBar.visibility = View.VISIBLE
+                    }
+                    is ScheduleRepository.Result.Success -> {
+                        binding.progressBar.visibility = View.GONE
+                        val schedule = result.data.listSchedule
+                        val listScheduleAdapter =
+                            ScheduleAdapter(schedule as ArrayList<ListScheduleItem>)
+                        binding.rvSchedule.adapter = listScheduleAdapter
+                    }
+                    is ScheduleRepository.Result.Error -> {
+                        binding.progressBar.visibility = View.GONE
+                        Toast.makeText(
+                            context,
+                            "Failure : " + result.error,
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
                 }
             }

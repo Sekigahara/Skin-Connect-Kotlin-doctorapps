@@ -18,8 +18,8 @@ data class PatientResponse (
 @Parcelize
 data class ListPatientItem(
 
-    @field:SerializedName("id")
-    val id: String,
+    @field:SerializedName("id_user")
+    val idUser: String,
 
     @field:SerializedName("photoUrl")
     val photoUrl: String,
