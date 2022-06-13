@@ -11,9 +11,10 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.skinconnect.doctorapps.data.entity.response.ListPatientItem
+import com.skinconnect.doctorapps.data.entity.Patient
+import com.skinconnect.doctorapps.data.entity.response.PatientResponse
 import com.skinconnect.doctorapps.data.local.UserPreferences
-import com.skinconnect.doctorapps.data.repository.PatientRepository
+import com.skinconnect.doctorapps.data.repository.Result
 import com.skinconnect.doctorapps.databinding.FragmentHomeBinding
 import com.skinconnect.doctorapps.ui.helper.BaseFragment
 import com.skinconnect.doctorapps.ui.helper.ViewModelFactory
@@ -52,46 +53,56 @@ class HomeFragment : BaseFragment() {
     }
 
     override fun setupViewModel() {
-        val binding = binding as FragmentHomeBinding
         val factory = ViewModelFactory.getPatientInstance(requireContext())
         val viewModel : HomeViewModel by viewModels { factory }
         this.viewModel = viewModel
 
-        viewModel.getDoctorToken().observe(requireActivity()) { token = it
+        viewModel.getDoctorToken().observe(requireActivity()) {
+            token = it
             if (token.isNotBlank() && token.isNotEmpty())
                 viewModel.getPatient(idDoctor, token)
         }
 
-        viewModel.getDoctorId().observe(requireActivity()) { idDoctor = it
+        viewModel.getDoctorId().observe(requireActivity()) {
+            idDoctor = it
             if (idDoctor.isNotBlank() && idDoctor.isNotEmpty())
                 viewModel.getPatient(idDoctor, token)
         }
-        viewModel.getPatient(idDoctor,token).observe(requireActivity()){ result ->
-            if (result != null){
-                when(result) {
-                    is PatientRepository.Result.Loading -> {
-                        binding.progressBar.visibility = View.VISIBLE
+        viewModel.getPatientResult.observe(requireActivity()) {
+            observeGetPatient(it)
+        }
+    }
+
+        private fun observeGetPatient(result : Result?){
+            if (result == null) return
+            val binding = binding as FragmentHomeBinding
+
+            when (result) {
+                Result.Loading-> binding.progressBar.visibility = View.VISIBLE
+                is Result.Error -> {
+                    binding.progressBar.visibility = View.GONE
+                    Toast.makeText(context, "Failure : " + result.error, Toast.LENGTH_SHORT).show()
+                }
+                is Result.Success<*> -> {
+                    binding.progressBar.visibility = View.GONE
+                    val patientDetailList = (result.data as PatientResponse).patient
+                    val patientList = mutableListOf<Patient>()
+
+                    patientDetailList?.forEach { patientData ->
+                        patientData?.items?.forEach { patientItem ->
+                            val patient = Patient(
+                                patientItem.name, patientItem.age
+                            )
+
+                            patientList.add(patient)
+                        }
                     }
-                    is PatientRepository.Result.Success -> {
-                        binding.progressBar.visibility = View.GONE
-                        val patient = result.data.listPatient
-                        val listPatientAdapter = HomeAdapter(patient as ArrayList<ListPatientItem>)
-                        binding.rvPatient.adapter = listPatientAdapter
-                    }
-                    is PatientRepository.Result.Error -> {
-                        binding.progressBar.visibility = View.GONE
-                        Toast.makeText(
-                            context,
-                            "Failure : " + result.error,
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    }
+
+                    val listPatientAdapter = HomeAdapter(patientList)
+                    binding.rvPatient.adapter = listPatientAdapter
                 }
             }
         }
-
-    }
-
 
     override fun setupAction() {}
 }

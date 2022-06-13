@@ -19,3 +19,8 @@ data class RegisterDetails(
 
 @Parcelize
 data class PhotoFile(val file: File, val isBackCamera: Boolean) : Parcelable
+
+data class Patient(
+    val name : String,
+    val age : String
+        )

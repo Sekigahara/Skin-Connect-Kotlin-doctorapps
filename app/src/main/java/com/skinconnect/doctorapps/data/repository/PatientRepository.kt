@@ -2,10 +2,13 @@ package com.skinconnect.doctorapps.data.repository
 
 import android.util.Log
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.liveData
 import com.skinconnect.doctorapps.data.entity.response.PatientResponse
+import com.skinconnect.doctorapps.data.entity.response.ScheduleResponse
 import com.skinconnect.doctorapps.data.local.UserPreferences
 import com.skinconnect.doctorapps.data.remote.ApiService
+import kotlin.Result
 
 class PatientRepository(
     service: ApiService,
@@ -25,7 +28,7 @@ class PatientRepository(
             emit(Result.Success(client))
         } catch (e : Exception) {
             Log.d("PatientRepository", "patient: ${e.message.toString()} ")
-            emit(Result.Error(e.message.toString()))
+            emit(PatientRepository.Result.Error(e.message.toString()))
         }
     }
 

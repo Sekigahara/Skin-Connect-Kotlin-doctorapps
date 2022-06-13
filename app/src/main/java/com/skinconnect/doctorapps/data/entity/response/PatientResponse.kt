@@ -4,26 +4,10 @@ import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 
-data class PatientResponse (
-    @field:SerializedName("listPatient")
-    val listPatient: List<ListPatientItem>,
+class PatientResponse (
+    @field:SerializedName("patient")
+    val patient: List<PatientDataResponse?>? = null,
 
-    @field:SerializedName("error")
-    val error: Boolean,
-
-    @field:SerializedName("message")
-    val message: String
-)
-
-@Parcelize
-data class ListPatientItem(
-
-    @field:SerializedName("id_user")
-    val idUser: String,
-
-    @field:SerializedName("photoUrl")
-    val photoUrl: String,
-
-    @field:SerializedName("username")
-    val username: String,
-): Parcelable
+    status: String,
+    message: String = "Success"
+) : BaseResponse(message, status)
